@@ -1,9 +1,37 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+ /* this will act as our light mode(default) */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  --color-background: #ffffff;
+  --color-text:blue;
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-border: #e5e7eb;
 }
 
+/* this is our dark theme */
+.dark {
+  --color-background: #1a1a1a;
+  --color-text: #ffffff;
+  --color-primary: #60a5fa;
+  --color-secondary: #94a3b8;
+  --color-border: #374151;
+}
 
+/* Usage in your CSS */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* .button {
+  background-color: var(--color-text);
+  border: 1px solid var(--color-border);
+  color: var(--color-border);
+} */
