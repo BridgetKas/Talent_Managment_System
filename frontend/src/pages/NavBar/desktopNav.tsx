@@ -2,7 +2,6 @@ import { useNavigate,NavLink } from "react-router-dom";
 import { FaRegMoon } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { useState,useEffect } from 'react';
-import Hero from "../../components/hero";
 
 
 interface DropdownItem {
@@ -102,12 +101,12 @@ export default function DesktopNav() {
     <div className=" hidden  sm:flex sm:flex-col  ">
     
       <nav className="bg-white relative z-50 text-blue-950">
-        <div className="max-w-7xl mx-auto md:px-4">
+        <div className="max-w-350 mx-auto  ">
           <div className="flex items-center justify-between h-20">
           
             <div className='flex items-center justify-center lg:gap-2'>
               <img src=' ../src/assets/TMS.png' className='w-18  lg:w-20'/>
-              <p className='md:text-xl font-bold'>EPIC</p>
+              <p className=' font-bold md:text-xl lg:2xl  lg:font-extrabold'>EPIC</p>
             </div>
 
             <div className="flex items-center space-x-6">
@@ -118,8 +117,8 @@ export default function DesktopNav() {
                   onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.label)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button className="flex items-center  hover:font-bold transition-opacity py-2 md:text-[16px] font-medium">
-                    <span>{link.label}</span>
+                  <button className="flex items-center border-0  hover:font-bold transition-opacity py-2 md:text-[16px] font-medium">
+                    <span className="lg:text-[18px]">{link.label}</span>
                     {link.hasDropdown && (
                       <svg 
                         className={`w-4 h-4 transition-transform ${activeDropdown === link.label ? 'rotate-180' : ''}`} 
@@ -218,7 +217,7 @@ export default function DesktopNav() {
                 </div>
               ))}
 
-              <button className="bg-blue-500 hover:bg-blue-800 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-colors" onClick={handleClick}>
+              <button className="bg-blue-500 hover:bg-blue-800 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-colors lg:text-[18px]" onClick={handleClick}>
                 Contact us
               </button>
               <button className='p-2' onClick={handleToggle}>
