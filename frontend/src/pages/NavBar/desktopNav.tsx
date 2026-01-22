@@ -1,40 +1,76 @@
-import { NavLink } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
+import { useNavigate,NavLink } from "react-router-dom";
 import { FaRegMoon } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { useState,useEffect } from 'react';
+import Hero from "../../components/hero";
 
 
-const navbar = [
-  {
-      label:'Hire Talent',
-      id:1,
-      path:'/'
-  },
- 
-  {
-      label:"Services",
-      id:2,
-      path:'/services'
-  },
-  {
-      label:"About",
-      id:3,
-      path:'/about'
-  },
-  {
-      label:"Pricing",
-      id:4,
-      path:'/pricing' 
-  }
-]
+interface DropdownItem {
+  label: string;
+  description?: string;
+  icon?: string;
+  badge?: string;
+}
 
-function DesktopNav() {
+interface NavLink {
+  label: string;
+  hasDropdown: boolean;
+  dropdownItems?: DropdownItem[];
+}
+
+export default function DesktopNav() {
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [dark,setDark] = useState(localStorage.getItem('Darktheme') === 'isTrue' ? true : false)
     const navigate = useNavigate()
-    
 
-    // this runs on mount
+  const navLinks: NavLink[] = [
+    {
+      label: 'Hire talent',
+      hasDropdown: true,
+      dropdownItems: [
+        { 
+          label: 'See all talents', 
+          description: 'Connect with top talent vetted by our recruitments team',
+          icon: '👥'
+        },
+        { label: 'Developers' },
+        { label: 'Designers' },
+        { label: 'Marketers' },
+        { label: 'eCommerce experts' },
+        { label: 'Sales experts' },
+        { label: 'Customer support' },
+        { label: 'Virtual assistants' },
+        
+      ]
+    },
+    {
+      label: 'Services',
+      hasDropdown: true,
+      dropdownItems: [
+        { label: ' Payroll', icon: '👤' },
+        { label: 'Health Insurance', icon: '🏥' },
+        { label: 'Equipment', icon: '💼' },
+       
+      ]
+    },
+    
+    {
+      label: 'About',
+      hasDropdown: true,
+      dropdownItems: [
+        { label: 'About us' },
+        { label: 'Our team' },
+        { label: 'Careers' },
+        { label: 'Blog' },
+      ]
+    },
+    {
+      label: 'Pricing',
+      hasDropdown: false,
+    }
+  ];
+
+      // this runs on mount
     useEffect(() => {
         const savedTheme = localStorage.getItem('Darktheme')
         if(savedTheme === 'isTrue'){
@@ -58,37 +94,145 @@ function DesktopNav() {
         localStorage.setItem('Darktheme', newDarkValue ? 'isTrue':'isFalse')
     }
 
-    function handleClick() {
-      navigate('./contact')
-    }
+      function handleClick() {
+        navigate('./contact')
+     }
 
   return (
-        <div className="hidden sm:flex sm:items-center sm:justify-between sm:text-[18px] sm:mb-3 bg-secondary sm:py-4 sm:px-2.5 md:px-5 lg:px-7  " style={{backgroundColor:'var(--color-background)',color:'var(--color-text)'}}>
+    <div className=" hidden sm:min-h-screen sm:flex sm:flex-col  ">
+    
+      <nav className="bg-white relative z-50 text-blue-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+          
             <div className='flex items-center justify-center lg:gap-2'>
-                <img src=' ../src/assets/TMS.png' className='w-18  lg:w-20'/>
-                <p className='text-2xl font-bold'>Epic</p>
+              <img src=' ../src/assets/TMS.png' className='w-18  lg:w-20'/>
+              <p className='text-xl font-bold'>EPIC</p>
             </div>
 
-            <div className='sm:flex sm:flex-row sm:items-center justify-between gap-1.5 sm:w-[80%] md:w-[83%] md:gap-3 lg:w-[80%] '>
-                <div className='  flex-3 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-5 p-2 md:gap-1 md:flex-2  lg' >
-                    {
-                        navbar.map((item)=> (
-                            <div key={item.id}>
-                                <NavLink to={item.path} className=' hover:font-bold focus p-1 active'>{item.label}</NavLink>
+            <div className="flex items-center space-x-6">
+              {navLinks.map((link) => (
+                <div
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.label)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  <button className="flex items-center  hover:font-bold transition-opacity py-2 text-[16px] font-medium">
+                    <span>{link.label}</span>
+                    {link.hasDropdown && (
+                      <svg 
+                        className={`w-4 h-4 transition-transform ${activeDropdown === link.label ? 'rotate-180' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Dropdown overlay */}
+                  {link.hasDropdown && activeDropdown === link.label && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
+                      <div className="bg-white rounded-lg shadow-2xl py-4 px-2 min-w-[320px] text-gray-800">
+                        {link.label === 'Services' && (
+                          <div className="space-y-2">
+                            {link.dropdownItems?.map((item, index) => (
+                              <div key={index}>
+                                {item.description ? (
+                                  <div className="px-4 py-3 hover:bg-indigo-50 rounded-lg cursor-pointer transition-colors">
+                                    {item.badge && (
+                                      <span className="inline-block bg-indigo-600 text-white text-xs px-2 py-0.5 rounded mb-2 font-semibold">
+                                        {item.badge}
+                                      </span>
+                                    )}
+                                    <div className="flex items-start space-x-3">
+                                      {item.icon && <span className="text-3xl">{item.icon}</span>}
+                                      <div className="flex-1">
+                                        <div className="font-semibold text-gray-900">{item.label}</div>
+                                        <div className="text-sm text-gray-600 mt-1 leading-relaxed">{item.description}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="px-4 py-2.5 hover:bg-indigo-50 rounded-lg cursor-pointer transition-colors flex items-center justify-between">
+                                    <div className="flex items-center space-x-2">
+                                      {item.icon && <span className="text-xl">{item.icon}</span>}
+                                      <span className="font-medium">{item.label}</span>
+                                    </div>
+                                    <span className="text-indigo-600">✓</span>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {link.label === 'Hire talent' && (
+                          <div className="space-y-1">
+                            <div className="px-4 py-2 mb-2 font-semibold text-gray-500 text-xs uppercase tracking-wide">
+                              Talent pool
                             </div>
-                        ))
-                    }
-                </div>
-                <div className=' flex items-center justify-end gap-1.5 flex-1 '>
-                    <button className='border rounded-2xl p-2 pr-3 pl-3' style={{backgroundColor:'var(--color-text)',color:'var(--color-background)'}}onClick={handleClick}>Contact Us</button>
-                    <button className='p-2' onClick={handleToggle}>
-                    {dark? <FaRegMoon size={30}/> : <MdOutlineWbSunny size={30}/>}
-                    </button>
-                </div>
+                            {link.dropdownItems?.map((item, index) => (
+                              <div key={index}>
+                                {item.description ? (
+                                  <div className="px-4 py-3 hover:bg-indigo-50 rounded-lg cursor-pointer transition-colors">
+                                    <div className="flex items-start space-x-3">
+                                      <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                                        <span className="text-xl">{item.icon}</span>
+                                      </div>
+                                      <div className="flex-1">
+                                        <div className="font-semibold flex items-center text-gray-900">
+                                          {item.label}
+                                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                          </svg>
+                                        </div>
+                                        <div className="text-sm text-gray-600 mt-1 leading-relaxed">{item.description}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="px-4 py-2.5 hover:bg-indigo-50 rounded-lg cursor-pointer transition-colors">
+                                    <span className="font-medium">{item.label}</span>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
 
+                        {( link.label === 'About') && (
+                          <div className="space-y-1">
+                            {link.dropdownItems?.map((item, index) => (
+                              <div key={index} className="px-4 py-2.5 hover:bg-indigo-50 rounded-lg cursor-pointer transition-colors">
+                                <span className="font-medium">{item.label}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <button className="bg-blue-500 hover:bg-blue-800 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-colors" onClick={handleClick}>
+                Contact us
+              </button>
+              <button className='p-2' onClick={handleToggle}>
+                {dark?   <FaRegMoon size={30}/> :<MdOutlineWbSunny size={30}/> }
+
+              </button>
             </div>
+          </div>
         </div>
-  )
-}
+      </nav>
+      <Hero/>
+     
 
-export default DesktopNav
+    </div>
+  );
+};
+
