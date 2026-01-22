@@ -99,15 +99,15 @@ export default function DesktopNav() {
      }
 
   return (
-    <div className=" hidden sm:min-h-screen sm:flex sm:flex-col  ">
+    <div className=" hidden  sm:flex sm:flex-col  ">
     
       <nav className="bg-white relative z-50 text-blue-950">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto md:px-4">
           <div className="flex items-center justify-between h-20">
           
             <div className='flex items-center justify-center lg:gap-2'>
               <img src=' ../src/assets/TMS.png' className='w-18  lg:w-20'/>
-              <p className='text-xl font-bold'>EPIC</p>
+              <p className='md:text-xl font-bold'>EPIC</p>
             </div>
 
             <div className="flex items-center space-x-6">
@@ -118,7 +118,7 @@ export default function DesktopNav() {
                   onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.label)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <button className="flex items-center  hover:font-bold transition-opacity py-2 text-[16px] font-medium">
+                  <button className="flex items-center  hover:font-bold transition-opacity py-2 md:text-[16px] font-medium">
                     <span>{link.label}</span>
                     {link.hasDropdown && (
                       <svg 
@@ -229,7 +229,6 @@ export default function DesktopNav() {
           </div>
         </div>
       </nav>
-      <Hero/>
      
 
     </div>
