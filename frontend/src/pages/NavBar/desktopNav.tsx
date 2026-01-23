@@ -217,7 +217,7 @@ export default function DesktopNav() {
                 </div>
               ))}
 
-              <button className="bg-blue-500 hover:bg-blue-800 hover:text-white px-5 py-2 rounded-full text-sm font-medium transition-colors lg:text-[18px]" onClick={handleClick}>
+              <button className="hover:bg-blue-500 text-white bg-blue-900 hover:text-black px-5 py-2 rounded-full text-sm font-medium transition-colors lg:text-[18px]" onClick={handleClick}>
                 Contact us
               </button>
               <button className='p-2' onClick={handleToggle}>
