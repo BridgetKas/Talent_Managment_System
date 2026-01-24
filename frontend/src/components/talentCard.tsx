@@ -62,7 +62,7 @@ export default function TalentSection() {
                     Access top talent with industry specific expertise
 
                 </h1>
-                <p className="lg:text-[18px]  w-150 opacity-80 text-center mx-auto mb-10 px-3 lg:max-w-4xl ">By integrating elite talent from emerging markets with robust remote infrastructure, we enable your business to expand efficiently while maintaining the highest standards of quality.</p>
+                <p className="lg:text-[18px]  w-100 sm:w-150 opacity-80 text-center mx-auto mb-10 px-3 lg:max-w-4xl ">By integrating elite talent from emerging markets with robust remote infrastructure, we enable your business to expand efficiently while maintaining the highest standards of quality.</p>
                 <div className="max-w-6xl flex flex-col mx-auto items-center justify-center  gap-4 md:flex-row md:flex-wrap  md:pl-5" >
                     {
                         talents.map((talent) => {
